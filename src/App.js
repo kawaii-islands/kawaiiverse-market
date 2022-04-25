@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { light } from "src/themes/light";
 import "./App.css";
+import "antd/dist/antd.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -15,6 +16,8 @@ import LoadingPage from "./components/LoadingPage/LoadingPage";
 import Messages from "./components/Messages";
 
 const Home = React.lazy(() => import("src/pages/Home/index.js"));
+const MyNFT = React.lazy(() => import("src/pages/MyNFT/index.js"));
+const NFTDetail = React.lazy(() => import("src/pages/MyNFT/NFTDetail/index.js"));
 
 function App() {
     return (
@@ -22,13 +25,18 @@ function App() {
             <ThemeProvider theme={light}>
                 <CssBaseline />
                 <Messages />
-                
+
                 <ToastContainer />
                 <Router>
                     <Header />
                     <CacheSwitch>
                         <Suspense fallback={<LoadingPage />}>
-                            <Route exact path="/" component={props => <Home {...props} />} />                     
+                            <Route exact path="/" component={props => <Home {...props} />} />
+                            <Route exact path="/my-nft" component={props => <MyNFT {...props} />} />
+                            <Route
+                                path="/my-nft/:storeAddress/:tokenId/:index"
+                                component={props => <NFTDetail {...props} />}
+                            />
                         </Suspense>
                     </CacheSwitch>
                 </Router>

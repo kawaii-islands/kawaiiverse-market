@@ -17,7 +17,7 @@ body,
     font-family: "Mali-Regular", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
 }
 
 * {
@@ -35,4 +35,26 @@ body > iframe {pointer-events: none;}
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-sizing: border-box;
     border-radius: 8px;
+}
+
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+    color: #ffffff !important;
+    border-radius: 50% !important;
+}
+
+.ant-pagination-item {
+    background: #5d3172 !important;
+    color: #ffffff !important;
+    border-radius: 50% !important;
+	border: none !important;
+}
+
+.ant-pagination-item a {
+    color: #ffffff !important;
+}
+
+.ant-pagination-item-active {
+	background: #BCABEA !important;
+    border-radius: 50% !important;
 }
