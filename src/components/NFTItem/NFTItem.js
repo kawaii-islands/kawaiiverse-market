@@ -28,11 +28,11 @@ const NFTItem = ({ onClick, data, handleNavigation, isStore, place }) => {
                 </div>
                 {place === "marketplace" && (
                     <div className={cx("middle")}>
-                    <div className={cx("tag-market")}>
-                        <img src={data.game.logoUrl || logoKawaii} alt="" />
-                        <span>{data.game.gameName}</span>
-                    </div>
-                    <div className={cx("quantity")}>{data.amount - data.alreadySale}</div>
+                        <div className={cx("tag-market")}>
+                            <img src={data.game.logoUrl || logoKawaii} alt="" />
+                            <span>{data.game.gameName}</span>
+                        </div>
+                        <div className={cx("quantity")}>{data.amount - data.alreadySale}</div>
                     </div>
                 )}
                 <div className={cx("bottom")}>
