@@ -92,7 +92,7 @@ const ViewNFT = ({
                     <ListNft
                         loading={loadingListNFT}
                         gameItemList={displayList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
-                        // place="marketplace"
+                        place="marketplace"
                         // gameSelected={address}
                     />
                 )}

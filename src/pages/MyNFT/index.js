@@ -200,7 +200,7 @@ const MyNFT = () => {
             );
             console.log(gameListData.flat(3));
             setOriginalList(gameListData.flat(3));
-            // setListNft(gameListData.flat(3));
+            setListNft(gameListData.flat(3));
             setLoadingListNFT(false);
             return gameListData.flat(3);
         } catch (error) {
@@ -350,7 +350,7 @@ const MyNFT = () => {
             );
 
             console.log(listBuyNFT.flat(3));
-            setListNft(listBuyNFT.flat(3));
+            // setListNft(listBuyNFT.flat(3));
         } catch (error) {
             console.log(error);
         }
