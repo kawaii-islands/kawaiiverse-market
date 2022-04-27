@@ -12,7 +12,7 @@ const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
         <>
             {gameItemList.length > 0 ? (
                 <div className={cx("list-nft")}>
-                    {gameItemList.map((item, index) => (
+                    {gameItemList.map((item, index) => item && (
                         <NFTItem
                             key={`nft-item-${index}`}
                             isStore={true}
@@ -21,11 +21,11 @@ const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
                             handleNavigation={() => {
                                 if (place === "marketplace") {
                                     history.push({
-                                        pathname: `/my-nft/${item.contract}/${item.tokenId}/${item.index}`,
+                                        pathname: `/my-nft/${item.detail.contract}/${item.detail.tokenId}/${item.detail.index}`,
                                     });
                                 } else {
                                     history.push({
-                                        pathname: `/profile/store/view-nft/${gameSelected}/${item._id}/${item.tokenId}/${item.index}`,
+                                        pathname: `/profile/store/view-nft/${gameSelected}/${item.detail._id}/${item.detail.tokenId}/${item.detail.index}`,
                                     });
                                 }
                             }}
