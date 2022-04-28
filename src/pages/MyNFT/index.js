@@ -50,11 +50,11 @@ const MyNFT = () => {
 
     useEffect(() => {
         getListBuyNFT();
-    }, []);
+    }, [account]);
 
     useEffect(() => {
         getGameList();
-    }, []);
+    }, [account]);
 
     useEffect(() => {
         if (location?.search) {
@@ -301,7 +301,7 @@ const MyNFT = () => {
             if (a) {
                 game = a;
             }
-
+            if(!account) return;
             const listBuyNFT = await Promise.all(
                 game.map(async (game, index) => {
                     let totalNftByGame = await getTotalNftOfUser(game.gameAddress);
@@ -314,23 +314,23 @@ const MyNFT = () => {
                                 let nftId = await getNftId(game.gameAddress, idx);
 
                                 const balance = await getBalanceOf(game.gameAddress, nftId);
-                                console.log("balance :>> ", balance);
+                                // console.log("balance :>> ", balance);
 
                                 const res = await axios.get(`${URL}/v1/nft/${game.gameAddress.toLowerCase()}/${nftId}`);
-                                console.log("res :>> ", res.data.data);
+                                // console.log("res :>> ", res.data.data);
 
                                 if (res.data.data) {
                                     return { balance, detail: res.data.data, game: game };
                                 }
                             }),
                         );
-
+                        console.log(nftInfo)
                         return nftInfo;
                     }
                 }),
             );
 
-            console.log(listBuyNFT.flat(3));
+            
             setOriginalList(listBuyNFT.flat(3));
             setListNft(listBuyNFT.flat(3));
         } catch (error) {
@@ -342,9 +342,9 @@ const MyNFT = () => {
     };
 
     const getTotalNftOfUser = async gameAddress => {
-        console.log("gameAddress :>> ", gameAddress);
+        // console.log("gameAddress :>> ", gameAddress);
         const length = await read("getTotalNftOfUser", BSC_CHAIN_ID, gameAddress, NFT1155_ABI, [account]);
-        console.log(length);
+        
         return length;
     };
 
@@ -394,7 +394,6 @@ const MyNFT = () => {
                         />
                     </div>
 
-                    {console.log("displayList :>> ", displayList)}
 					
                     <div className={cx("right")}>
                         {isSellNFT ? (
