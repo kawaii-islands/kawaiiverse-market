@@ -19,9 +19,9 @@ const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
                             data={item}
                             place={place}
                             handleNavigation={() => {
-                                if (place === "marketplace") {
+                                if (place === "boughtNft") {
                                     history.push({
-                                        pathname: `/my-nft/${item.detail.contract}/${item.detail.tokenId}/${item.detail.index}`,
+                                        pathname: `/my-nft/${item.detail.contract}/${item.detail.tokenId}`,
                                     });
                                 } else {
                                     history.push({
