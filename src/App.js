@@ -34,7 +34,7 @@ function App() {
                             <Route exact path="/" component={props => <Home {...props} />} />
                             <Route exact path="/my-nft" component={props => <MyNFT {...props} />} />
                             <Route
-                                path="/my-nft/:storeAddress/:tokenId/:index"
+                                path="/my-nft/:gameAddress/:tokenId"
                                 component={props => <NFTDetail {...props} />}
                             />
                         </Suspense>
