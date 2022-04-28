@@ -54,7 +54,7 @@ const MyNFT = () => {
 
     useEffect(() => {
         getGameList();
-    }, [account]);
+    }, []);
 
     useEffect(() => {
         if (location?.search) {
