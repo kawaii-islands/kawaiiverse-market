@@ -97,7 +97,7 @@ const ViewNFT = ({
                     />
                 )}
             </Row>
-            {displayList?.length > 0 && (
+            {displayList && displayList.length > 0 && (
                 <div className={cx("pagination")}>
                     <Pagination
                         pageSize={PAGE_SIZE}
