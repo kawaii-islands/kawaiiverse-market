@@ -26,7 +26,7 @@ import Web3 from "web3";
 import { BSC_CHAIN_ID, BSC_rpcUrls } from "src/consts/blockchain";
 import LoadingModal from "src/components/LoadingModal2/LoadingModal";
 // import KAWAII_STORE_ABI from "src/utils/abi/KawaiiverseStore.json";
-import logoKawaii from "src/assets/images/logo_kawaii.png"
+import logoKawaii from "src/assets/images/logo_kawaii.png";
 const cx = cn.bind(styles);
 const web3 = new Web3(BSC_rpcUrls);
 
@@ -50,7 +50,7 @@ const NFTDetail = () => {
     let pathnames = pathname.split("/").filter(Boolean);
     pathnames.splice(5, 1);
     pathnames.splice(2, 1);
-    pathnames.splice(1,4)
+    pathnames.splice(1, 4);
     const getNftInfo = async () => {
         setLoading(true);
         try {
@@ -64,15 +64,13 @@ const NFTDetail = () => {
             }
             gameItem.index = index;
             setNftInfo(gameItem);
-            
         } catch (error) {
             console.log(error);
-            
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
-    
+
     const getAllowance = async () => {
         if (!account) return;
         const allowance = await read("allowance", BSC_CHAIN_ID, KAWAII_TOKEN_ADDRESS, KAWAII_TOKEN_ABI, [
@@ -99,7 +97,7 @@ const NFTDetail = () => {
             toast.error("Connect wallet first !");
             return;
         }
-        if(amount === 0){
+        if (amount === 0) {
             toast.error("Hết hàng không mua được");
             return;
         }
@@ -118,7 +116,7 @@ const NFTDetail = () => {
             if (!allowance) {
                 await approve();
             }
-            
+
             await write(
                 "buyNFT1155",
                 library.provider,
@@ -131,14 +129,13 @@ const NFTDetail = () => {
                     setHash(hash);
                     setStepLoading(1);
                 },
-
             );
             setStepLoading(2);
         } catch (err) {
             console.log(err);
             toast.error(err);
             setStepLoading(3);
-        }finally {
+        } finally {
             getNftInfo();
             setLoadingModal(false);
         }
@@ -148,23 +145,23 @@ const NFTDetail = () => {
     ) : (
         <MainLayout>
             <div className={cx("mint-nft-detail")}>
-            {showModalLoading && (
-                <LoadingModal
-                    show={showModalLoading}
-                    network={"BscScan"}
-                    loading={loadingModal}
-                    title={loadingTitle}
-                    stepLoading={stepLoading}
-                    onHide={() => {
-                        setShowModalLoading(false);
-                        setHash(undefined);
-                        setStepLoading(0);
-                    }}
-                    hash={hash}
-                    hideParent={() => {}}
-                    notViewNft={true}
-                />
-            )}
+                {showModalLoading && (
+                    <LoadingModal
+                        show={showModalLoading}
+                        network={"BscScan"}
+                        loading={loadingModal}
+                        title={loadingTitle}
+                        stepLoading={stepLoading}
+                        onHide={() => {
+                            setShowModalLoading(false);
+                            setHash(undefined);
+                            setStepLoading(0);
+                        }}
+                        hash={hash}
+                        hideParent={() => {}}
+                        notViewNft={true}
+                    />
+                )}
                 {/* <div className={cx("breadcrums")}>
                     {" "}
                     <Breadcrumbs separator={<NavigateNextIcon />} aria-label="breadcrumb">

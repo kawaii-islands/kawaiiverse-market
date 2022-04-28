@@ -15,30 +15,30 @@ const NFTItem = ({ onClick, data, handleNavigation, isStore, place }) => {
                 <div
                     className={cx("top")}
                     style={{
-                        backgroundImage: data?.imageUrl
-                            ? `url(${data.imageUrl})`
+                        backgroundImage: data?.detail.imageUrl
+                            ? `url(${data.detail.imageUrl})`
                             : `url(https://images.kawaii.global/kawaii-marketplace-image/items/206008.png)`,
                     }}
                 >
-                    {isStore && place !== "marketplace" && (
+                    {place !== "boughtNft" && (
                         <div className={cx("tag")}>
                             {data.amount - data.alreadySale}/{data.amount || data.supply} Left
                         </div>
                     )}
                 </div>
-                {place === "marketplace" && (
+                {place === "boughtNft" && (
                     <div className={cx("middle")}>
-                    <div className={cx("tag-market")}>
-                        <img src={data.game.logoUrl || logoKawaii} alt="" />
-                        <span>{data.game.gameName}</span>
-                    </div>
-                    <div className={cx("quantity")}>{data.amount - data.alreadySale}</div>
+                        <div className={cx("tag-market")}>
+                            <img src={data.game.logoUrl || logoKawaii} alt="" />
+                            <span>{data.game.gameName}</span>
+                        </div>
+                        <div className={cx("quantity")}>{data.balance}</div>
                     </div>
                 )}
                 <div className={cx("bottom")}>
-                    <div className={cx("title")}>{data?.name || "Name"}</div>
-                    <div className={cx("nftId")}>#{data?.tokenId}</div>
-                    {isStore && (
+                    <div className={cx("title")}>{data?.detail.name || "Name"}</div>
+                    <div className={cx("nftId")}>#{data?.detail.tokenId}</div>
+                    {place !== "boughtNft" && (
                         <div className={cx("number-box")}>
                             <span className={cx("number")}>
                                 {data.price ? Number(web3.utils.fromWei(data.price.toString())) : 0} KWT
