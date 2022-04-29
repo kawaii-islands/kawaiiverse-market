@@ -3,13 +3,13 @@ $break-point-2: 912px;
 $break-point-3: 767px;
 
 .main-layout {
-  .body {
-    min-height: 100vh;
-    height: 100%;
-	background: #1B1349;
+    .body {
+        min-height: calc(100vh - 70px);
+        height: 100%;
+        background: #1b1349;
 
-    .container {
-		width: 100vw;
+        .container {
+            width: 100vw;
+        }
     }
-  }
 }

@@ -63,7 +63,8 @@ $break-point-3: 767px;
 
         .right {
             padding: 20px 48px 20px 48px;
-            width: 100%;
+            height: fit-content;
+            width: calc(100vw - 300px);
 
             .right-top {
                 margin-top: 40px;
