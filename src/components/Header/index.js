@@ -35,7 +35,7 @@ const Header = () => {
                 <div className={cx("left")}>
                     <img src={logo} alt="Logo" className={cx("item")} onClick={() => history.push("/")} />
                     <div className={cx("list")}>
-                        <div className={cx("item")} onClick={() => history.push("/my-nft")}>
+                        {/* <div className={cx("item")} onClick={() => history.push("/my-nft")}>
                             My NFTs
                         </div>
                         <div className={cx("item")} onClick={() => history.push("/")}>
@@ -43,7 +43,7 @@ const Header = () => {
                         </div>
                         <div className={cx("item")} onClick={() => history.push("/")}>
                             Item 3
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className={cx("cn-wallet")}>

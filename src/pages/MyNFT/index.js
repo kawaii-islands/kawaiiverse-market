@@ -378,7 +378,7 @@ const MyNFT = () => {
             </Menu.Item>
         </Menu>
     );
-
+        console.log(activeTab)
     return loadingPage ? (
         <LoadingPage />
     ) : (
@@ -397,7 +397,7 @@ const MyNFT = () => {
 
 					
                     <div className={cx("right")}>
-                        {isSellNFT ? (
+                        {/* {isSellNFT ? (
                             <SellNFT 
                             listNft={listNft}
                             gameSelected={gameSelected} 
@@ -418,7 +418,31 @@ const MyNFT = () => {
                                 itemRender={itemRender}
                                 setIsSellNFT={setIsSellNFT}
                             />
-                        )}
+                        )} */}
+                        {
+                            activeTab === 1 &&   <ViewNFT
+                            displayList={displayList}
+                            search={search}
+                            handleSearch={handleSearch}
+                            menu={menu}
+                            gameSelected={gameSelected}
+                            handleDeleteFilter={handleDeleteFilter}
+                            handleClearFilter={handleClearFilter}
+                            loadingListNFT={loadingListNFT}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            itemRender={itemRender}
+                            setIsSellNFT={setIsSellNFT}
+                        />
+                        }
+                         {
+                            activeTab === 3 && <SellNFT 
+                            listNft={listNft}
+                            gameSelected={gameSelected} 
+                            setIsSellNFT={setIsSellNFT} 
+                            isSellNFT={isSellNFT} />
+                        
+                        }
                     </div>
                 </div>
             </div>

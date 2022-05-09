@@ -27,6 +27,7 @@ import { BSC_CHAIN_ID, BSC_rpcUrls } from "src/consts/blockchain";
 import LoadingModal from "src/components/LoadingModal2/LoadingModal";
 // import KAWAII_STORE_ABI from "src/utils/abi/KawaiiverseStore.json";
 import logoKawaii from "src/assets/images/logo_kawaii.png";
+import AuctionModal from "./AuctionModal/AuctionModal";
 const cx = cn.bind(styles);
 const web3 = new Web3(BSC_rpcUrls);
 
@@ -43,6 +44,7 @@ const NFTDetail = () => {
     const [loadingTitle, setLoadingTitle] = useState("");
     const [stepLoading, setStepLoading] = useState(0);
     const [hash, setHash] = useState();
+    const [open, setOpen] = useState(false);
     const [loadingModal, setLoadingModal] = useState(false);
     useEffect(() => {
         getNftInfo();
@@ -61,9 +63,9 @@ const NFTDetail = () => {
 
             const resNftInfo = await axios.get(`${URL}/v1/nft/${gameAddress.toLowerCase()}/${tokenId}`);
 
-			let gameItem = [];
+            let gameItem = [];
 
-			if (resNftInfo.data.data) {
+            if (resNftInfo.data.data) {
                 gameItem = { balance, ...resNftInfo.data.data };
             }
 
@@ -75,7 +77,7 @@ const NFTDetail = () => {
         }
     };
 
-	const getBalanceOf = async (gameAddress, id) => {
+    const getBalanceOf = async (gameAddress, id) => {
         const balance = await read("balanceOf", BSC_CHAIN_ID, gameAddress, NFT1155_ABI, [account, id]);
         return balance;
     };
@@ -85,6 +87,7 @@ const NFTDetail = () => {
     ) : (
         <MainLayout>
             <div className={cx("mint-nft-detail")}>
+                <AuctionModal open={open} setOpen={setOpen} />
                 {showModalLoading && (
                     <LoadingModal
                         show={showModalLoading}
@@ -104,12 +107,7 @@ const NFTDetail = () => {
                 )}
                 <Row>
                     <Col span={10} className={cx("left")}>
-                        <Button
-                            className={cx("back")}
-                            onClick={() =>
-                                history.goBack()
-                            }
-                        >
+                        <Button className={cx("back")} onClick={() => history.goBack()}>
                             <LeftOutlined />
                         </Button>
                         <div className={cx("image-box")}>
@@ -134,11 +132,12 @@ const NFTDetail = () => {
                         </div>
 
                         <div className={cx("category")}>{nftInfo?.category}</div>
+                        <Button className={cx("sell-btn")} onClick={() => setOpen(true)}>
+                            Sell NFT
+                        </Button>
                         <div className={cx("content")}>
                             <span className={cx("title")}>Amount:</span>
-                            <span className={cx("value")}>
-                                {nftInfo?.balance}
-                            </span>
+                            <span className={cx("value")}>{nftInfo?.balance}</span>
                         </div>
                         <div className={cx("content")}>
                             <span className={cx("title")}>Author:</span>

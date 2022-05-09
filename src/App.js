@@ -32,9 +32,9 @@ function App() {
                     <CacheSwitch>
                         <Suspense fallback={<LoadingPage />}>
                             <Route exact path="/" component={props => <Home {...props} />} />
-                            <Route exact path="/my-nft" component={props => <MyNFT {...props} />} />
+                            <Route exact path="/profile" component={props => <MyNFT {...props} />} />
                             <Route
-                                path="/my-nft/:gameAddress/:tokenId"
+                                path="/profile/:gameAddress/:tokenId"
                                 component={props => <NFTDetail {...props} />}
                             />
                         </Suspense>

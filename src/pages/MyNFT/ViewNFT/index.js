@@ -54,7 +54,7 @@ const ViewNFT = ({
                     </Dropdown>
                 </div>
 
-                <Button
+                {/* <Button
                     className={cx("button")}
                     onClick={() => {
                         history.push({ search: "?view=false" });
@@ -62,7 +62,7 @@ const ViewNFT = ({
                     }}
                 >
                     Sell NFT
-                </Button>
+                </Button> */}
             </div>
 
             <div className={cx("right-filter")}>
