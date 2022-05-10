@@ -6,7 +6,7 @@ import styles from "./ListNft.module.scss";
 import NFTItem from "src/components/NFTItem/NFTItem";
 
 const cx = cn.bind(styles);
-const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
+const ListNft = ({ gameItemList, gameSelected, loading, place,place2 }) => {
     const history = useHistory();
     return (
         <>
@@ -19,6 +19,12 @@ const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
                             data={item}
                             place={place}
                             handleNavigation={() => {
+                                if(place2 === "onsale"){
+                                    history.push({
+                                        pathname: `/auction/${item.game}/${item.auctionId}/${item.detail.tokenId}`,
+                                    });
+                                    return;
+                                }
                                 if (place === "boughtNft") {
                                     history.push({
                                         pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,

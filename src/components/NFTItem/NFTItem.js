@@ -4,12 +4,14 @@ import styles from "./NFTItem.module.scss";
 import logoKawaii from "../../assets/images/logo_kawaii.png";
 import Web3 from "web3";
 import { BSC_rpcUrls } from "src/consts/blockchain";
+import { DataArray } from "@mui/icons-material";
 
 const cx = cn.bind(styles);
 const web3 = new Web3(BSC_rpcUrls);
 
 const NFTItem = ({ onClick, data, handleNavigation, isStore, place }) => {
-    return (
+    
+    if(data.detail) return (
         <div className={cx("nft-item")}>
             <div className={cx("container")} onClick={handleNavigation}>
                 <div

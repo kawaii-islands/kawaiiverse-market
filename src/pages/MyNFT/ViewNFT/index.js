@@ -31,9 +31,8 @@ const ViewNFT = ({
 
     return (
         <>
+        <div className={cx("right-top-title")}>NFTs balance</div>
             <div className={cx("right-top")}>
-            
-            <div className={cx("right-top-title")}>NFTs balance</div>
                 <div className={cx("right-top-title")}>{displayList?.length} items</div>
 
                 <Input
