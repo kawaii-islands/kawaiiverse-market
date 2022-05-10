@@ -87,7 +87,7 @@ const NFTDetail = () => {
     ) : (
         <MainLayout>
             <div className={cx("mint-nft-detail")}>
-                <AuctionModal open={open} setOpen={setOpen} />
+                <AuctionModal open={open} setOpen={setOpen} nftInfo={nftInfo}/>
                 {showModalLoading && (
                     <LoadingModal
                         show={showModalLoading}

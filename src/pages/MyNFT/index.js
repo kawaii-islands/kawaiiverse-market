@@ -25,7 +25,7 @@ import { Menu, Dropdown, Pagination, Row } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import filter from "src/assets/icons/filter.svg";
 import ViewNFT from "./ViewNFT";
-import SellNFT from "./SellNFT";
+import SellNFT from "./Bundle";
 import { useHistory } from "react-router-dom";
 
 const cx = cn.bind(styles);
@@ -315,7 +315,7 @@ const MyNFT = () => {
 
                                 const balance = await getBalanceOf(game.gameAddress, nftId);
                                 console.log("balance :>> ", balance);
-
+                                
                                 const res = await axios.get(`${URL}/v1/nft/${game.gameAddress.toLowerCase()}/${nftId}`);
                                 console.log("res :>> ", res.data.data);
 
@@ -421,6 +421,22 @@ const MyNFT = () => {
                         )} */}
                         {
                             activeTab === 1 &&   <ViewNFT
+                            displayList={displayList}
+                            search={search}
+                            handleSearch={handleSearch}
+                            menu={menu}
+                            gameSelected={gameSelected}
+                            handleDeleteFilter={handleDeleteFilter}
+                            handleClearFilter={handleClearFilter}
+                            loadingListNFT={loadingListNFT}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            itemRender={itemRender}
+                            setIsSellNFT={setIsSellNFT}
+                        />
+                        }
+                         {
+                            activeTab === 2 &&   <ViewNFT
                             displayList={displayList}
                             search={search}
                             handleSearch={handleSearch}
