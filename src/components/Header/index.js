@@ -35,15 +35,9 @@ const Header = () => {
                 <div className={cx("left")}>
                     <img src={logo} alt="Logo" className={cx("item")} onClick={() => history.push("/")} />
                     <div className={cx("list")}>
-                        {/* <div className={cx("item")} onClick={() => history.push("/my-nft")}>
-                            My NFTs
+                        <div className={cx("item")} onClick={() => history.push("/marketplace")}>
+                            Marketplace
                         </div>
-                        <div className={cx("item")} onClick={() => history.push("/")}>
-                            Item 2
-                        </div>
-                        <div className={cx("item")} onClick={() => history.push("/")}>
-                            Item 3
-                        </div> */}
                     </div>
                 </div>
                 <div className={cx("cn-wallet")}>

@@ -8,29 +8,33 @@ import NFTItem from "src/components/NFTItem/NFTItem";
 const cx = cn.bind(styles);
 const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
     const history = useHistory();
+    console.log(gameItemList);
     return (
         <>
             {gameItemList.length > 0 ? (
                 <div className={cx("list-nft")}>
-                    {gameItemList.map((item, index) => item && (
-                        <NFTItem
-                            key={`nft-item-${index}`}
-                            isStore={true}
-                            data={item}
-                            place={place}
-                            handleNavigation={() => {
-                                if (place === "boughtNft") {
-                                    history.push({
-                                        pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
-                                    });
-                                } else {
-                                    history.push({
-                                        pathname: `/profile/store/view-nft/${gameSelected}/${item.detail._id}/${item.detail.tokenId}/${item.detail.index}`,
-                                    });
-                                }
-                            }}
-                        />
-                    ))}
+                    {gameItemList.map(
+                        (item, index) =>
+                            item && (
+                                <NFTItem
+                                    key={`nft-item-${index}`}
+                                    isStore={true}
+                                    data={item}
+                                    place={place}
+                                    handleNavigation={() => {
+                                        if (place === "boughtNft") {
+                                            history.push({
+                                                pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
+                                            });
+                                        } else {
+                                            history.push({
+                                                pathname: `/profile/store/view-nft/${gameSelected}/${item.detail._id}/${item.detail.tokenId}/${item.detail.index}`,
+                                            });
+                                        }
+                                    }}
+                                />
+                            ),
+                    )}
                 </div>
             ) : (
                 <>

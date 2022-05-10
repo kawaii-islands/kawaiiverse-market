@@ -301,7 +301,7 @@ const MyNFT = () => {
             if (a) {
                 game = a;
             }
-            if(!account) return;
+            if (!account) return;
             let listBuyNFT = await Promise.all(
                 game.map(async (game, index) => {
                     let totalNftByGame = await getTotalNftOfUser(game.gameAddress);
@@ -320,6 +320,7 @@ const MyNFT = () => {
                                 console.log("res :>> ", res.data.data);
 
                                 if (res.data.data) {
+                                    console.log({ balance, detail: res.data.data, game: game });
                                     return { balance, detail: res.data.data, game: game };
                                 }
                             }),
@@ -330,8 +331,8 @@ const MyNFT = () => {
                 }),
             );
 
-            listBuyNFT = listBuyNFT.flat(3).filter( Boolean );
-            console.log(listBuyNFT)
+            listBuyNFT = listBuyNFT.flat(3).filter(Boolean);
+            console.log(listBuyNFT);
             setOriginalList(listBuyNFT);
             setListNft(listBuyNFT);
         } catch (error) {
@@ -345,7 +346,7 @@ const MyNFT = () => {
     const getTotalNftOfUser = async gameAddress => {
         // console.log("gameAddress :>> ", gameAddress);
         const length = await read("getTotalNftOfUser", BSC_CHAIN_ID, gameAddress, NFT1155_ABI, [account]);
-        
+
         return length;
     };
 
@@ -378,7 +379,7 @@ const MyNFT = () => {
             </Menu.Item>
         </Menu>
     );
-        console.log(activeTab)
+    console.log(activeTab);
     return loadingPage ? (
         <LoadingPage />
     ) : (
@@ -395,7 +396,6 @@ const MyNFT = () => {
                         />
                     </div>
 
-					
                     <div className={cx("right")}>
                         {/* {isSellNFT ? (
                             <SellNFT 
@@ -419,30 +419,30 @@ const MyNFT = () => {
                                 setIsSellNFT={setIsSellNFT}
                             />
                         )} */}
-                        {
-                            activeTab === 1 &&   <ViewNFT
-                            displayList={displayList}
-                            search={search}
-                            handleSearch={handleSearch}
-                            menu={menu}
-                            gameSelected={gameSelected}
-                            handleDeleteFilter={handleDeleteFilter}
-                            handleClearFilter={handleClearFilter}
-                            loadingListNFT={loadingListNFT}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                            itemRender={itemRender}
-                            setIsSellNFT={setIsSellNFT}
-                        />
-                        }
-                         {
-                            activeTab === 3 && <SellNFT 
-                            listNft={listNft}
-                            gameSelected={gameSelected} 
-                            setIsSellNFT={setIsSellNFT} 
-                            isSellNFT={isSellNFT} />
-                        
-                        }
+                        {activeTab === 1 && (
+                            <ViewNFT
+                                displayList={displayList}
+                                search={search}
+                                handleSearch={handleSearch}
+                                menu={menu}
+                                gameSelected={gameSelected}
+                                handleDeleteFilter={handleDeleteFilter}
+                                handleClearFilter={handleClearFilter}
+                                loadingListNFT={loadingListNFT}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                                itemRender={itemRender}
+                                setIsSellNFT={setIsSellNFT}
+                            />
+                        )}
+                        {activeTab === 3 && (
+                            <SellNFT
+                                listNft={listNft}
+                                gameSelected={gameSelected}
+                                setIsSellNFT={setIsSellNFT}
+                                isSellNFT={isSellNFT}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

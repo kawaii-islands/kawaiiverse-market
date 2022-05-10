@@ -17,6 +17,7 @@ import Messages from "./components/Messages";
 
 const Home = React.lazy(() => import("src/pages/Home/index.js"));
 const MyNFT = React.lazy(() => import("src/pages/MyNFT/index.js"));
+const Marketplace = React.lazy(() => import("src/pages/Marketplace/index.js"));
 const NFTDetail = React.lazy(() => import("src/pages/MyNFT/NFTDetail/index.js"));
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                         <Suspense fallback={<LoadingPage />}>
                             <Route exact path="/" component={props => <Home {...props} />} />
                             <Route exact path="/profile" component={props => <MyNFT {...props} />} />
+                            <Route exact path="/marketplace" component={props => <Marketplace {...props} />} />
                             <Route
                                 path="/profile/:gameAddress/:tokenId"
                                 component={props => <NFTDetail {...props} />}
