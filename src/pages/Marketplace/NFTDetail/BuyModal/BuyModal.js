@@ -30,6 +30,7 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
     const [hash, setHash] = useState();
     const [auctionId, setAuctionId] = useState();
     const [kwtPrice, setKwtPrice] = useState(0);
+    const price = 1000;
 
     const context = useWeb3React();
     const { account, chainId, library } = context;
@@ -38,6 +39,22 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
         getAuctionId();
         getKwtPrice();
     }, []);
+
+    const getUserAllowance = async () => {
+        const userAllowance = await read("allowance", BSC_CHAIN_ID, KAWAII_TOKEN_ADDRESS, KAWAII_TOKEN_ABI, [
+            account,
+            MARKETPLACE_ADDRESS,
+        ]);
+        return userAllowance;
+    };
+
+    const checkAllowance = async () => {
+        console.log("check allowance");
+        const userAllowance = await getUserAllowance();
+        console.log(web3.utils.fromWei(userAllowance.toString()));
+        console.log(" " + price);
+        if (price > web3.utils.fromWei(userAllowance.toString())) approve(price.toString());
+    };
 
     const getKwtPrice = async () => {
         try {
@@ -70,14 +87,15 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
                     throw new Error("Please change network to Binance smart chain!");
                 }
             }
-            await approve();
+            // await approve();
+            await checkAllowance();
 
             await write(
                 "bid",
                 library.provider,
                 MARKETPLACE_ADDRESS,
                 MARKETPLACE_ABI,
-                [auctionId - 1, web3.utils.toWei("2")],
+                [auctionId - 1, web3.utils.toWei(price.toString())],
                 {
                     from: account,
                 },
@@ -98,13 +116,13 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
         setAuctionId(auction);
     };
 
-    const approve = async () => {
+    const approve = async amount => {
         await write(
             "approve",
             library.provider,
             KAWAII_TOKEN_ADDRESS,
             KAWAII_TOKEN_ABI,
-            [MARKETPLACE_ADDRESS, web3.utils.toWei("20")],
+            [MARKETPLACE_ADDRESS, web3.utils.toWei(amount)],
             {
                 from: account,
             },
