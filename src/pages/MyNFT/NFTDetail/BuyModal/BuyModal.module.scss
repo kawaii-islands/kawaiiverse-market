@@ -118,33 +118,7 @@
             border-radius: 6px;
             padding: 6px 16px;
             font-size: 18px;
-            // text-transform: uppercase;
-            // font-weight: 500;
         }
-        // .input {
-        //     color: #314c72;
-        //     box-sizing: border-box;
-        //     border-radius: 6px;
-        //     padding: 5px 5px 5px 10px;
-        //     background: #fdf5e8;
-        //     border: 0;
-        //     font-weight: normal;
-        //     font-size: 16px;
-        //     flex-grow: 1;
-        //     max-width: 250px;
-        //     border: 1px solid #d9a4aa;
-        //     color: #833f1d;
-
-        //     @media (max-width: 400px) {
-        //         max-width: 200px;
-        //     }
-
-        //     input {
-        //         text-align: left;
-        //         font-weight: normal;
-        //         font-size: 16px;
-        //     }
-        // }
         .input {
             :global {
                 .unit {

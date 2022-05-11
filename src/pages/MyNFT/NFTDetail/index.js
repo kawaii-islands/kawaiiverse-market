@@ -28,6 +28,7 @@ import LoadingModal from "src/components/LoadingModal2/LoadingModal";
 // import KAWAII_STORE_ABI from "src/utils/abi/KawaiiverseStore.json";
 import logoKawaii from "src/assets/images/logo_kawaii.png";
 import AuctionModal from "./AuctionModal/AuctionModal";
+import BuyModal from "./BuyModal/BuyModal";
 const cx = cn.bind(styles);
 const web3 = new Web3(BSC_rpcUrls);
 
@@ -45,6 +46,7 @@ const NFTDetail = () => {
     const [stepLoading, setStepLoading] = useState(0);
     const [hash, setHash] = useState();
     const [open, setOpen] = useState(false);
+    const [openBuy, setOpenBuy] = useState(false);
     const [loadingModal, setLoadingModal] = useState(false);
     useEffect(() => {
         getNftInfo();
@@ -87,7 +89,8 @@ const NFTDetail = () => {
     ) : (
         <MainLayout>
             <div className={cx("mint-nft-detail")}>
-                <AuctionModal open={open} setOpen={setOpen} />
+                <AuctionModal open={open} setOpen={setOpen} nftInfo={nftInfo} />
+                <BuyModal openBuy={openBuy} setOpenBuy={setOpenBuy} />
                 {showModalLoading && (
                     <LoadingModal
                         show={showModalLoading}
@@ -134,6 +137,9 @@ const NFTDetail = () => {
                         <div className={cx("category")}>{nftInfo?.category}</div>
                         <Button className={cx("sell-btn")} onClick={() => setOpen(true)}>
                             Sell NFT
+                        </Button>
+                        <Button className={cx("sell-btn")} onClick={() => setOpenBuy(true)}>
+                            Buy NFT
                         </Button>
                         <div className={cx("content")}>
                             <span className={cx("title")}>Amount:</span>
