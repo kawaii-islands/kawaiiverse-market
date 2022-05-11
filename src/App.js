@@ -19,7 +19,7 @@ const Home = React.lazy(() => import("src/pages/Home/index.js"));
 const MyNFT = React.lazy(() => import("src/pages/MyNFT/index.js"));
 const Marketplace = React.lazy(() => import("src/pages/Marketplace/index.js"));
 const NFTDetail = React.lazy(() => import("src/pages/MyNFT/NFTDetail/index.js"));
-
+const OnSaleDetail = React.lazy(() => import("src/pages/MyNFT/OnSale/NFTDetail/index.js"));
 function App() {
     return (
         <Provider store={store}>
@@ -38,6 +38,10 @@ function App() {
                             <Route
                                 path="/profile/:gameAddress/:tokenId"
                                 component={props => <NFTDetail {...props} />}
+                            />
+                            <Route
+                                path="/auction/:gameAddress/:auctionId/:tokenId"
+                                component={props => <OnSaleDetail {...props} />}
                             />
                         </Suspense>
                     </CacheSwitch>

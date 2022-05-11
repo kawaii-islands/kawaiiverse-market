@@ -26,6 +26,7 @@ import { DownOutlined } from "@ant-design/icons";
 import filter from "src/assets/icons/filter.svg";
 import ViewNFT from "./ViewNFT";
 import SellNFT from "./Bundle";
+import OnSale from "./OnSale";
 import { useHistory } from "react-router-dom";
 
 const cx = cn.bind(styles);
@@ -50,7 +51,7 @@ const MyNFT = () => {
 
     useEffect(() => {
         getListBuyNFT();
-    }, [account]);
+    }, [account, activeTab]);
 
     useEffect(() => {
         getGameList();
@@ -436,8 +437,8 @@ const MyNFT = () => {
                             />
                         )}
                         {activeTab === 2 && (
-                            <ViewNFT
-                                displayList={displayList}
+                            <OnSale
+                                displayList={[]}
                                 search={search}
                                 handleSearch={handleSearch}
                                 menu={menu}
