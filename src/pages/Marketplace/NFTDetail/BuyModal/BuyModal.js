@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import LoadingModal from "src/components/LoadingModal2/LoadingModal";
 import tagIcon from "src/assets/icons/tag.svg";
 import { Input, Tooltip, InputAdornment } from "@material-ui/core";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
@@ -12,6 +13,11 @@ import { read, createNetworkOrSwitch, write } from "src/services/web3";
 import { KAWAII_TOKEN_ADDRESS, MARKETPLACE_ADDRESS } from "src/consts/address";
 import * as web3 from "web3";
 import { BSC_CHAIN_ID } from "src/consts/blockchain";
+import KWTtoken from "src/assets/icons/KWTtoken.svg";
+import defaultImage from "src/assets/icons/default_image.svg";
+import tagPriceSmall from "src/assets/icons/tagPriceSmall.svg";
+import axios from "axios";
+import { floorFormat } from "src/utils/formatNumber";
 
 import KAWAII_TOKEN_ABI from "src/utils/abi/KawaiiToken.json";
 import MARKETPLACE_ABI from "src/utils/abi/KawaiiMarketplace.json";
@@ -23,13 +29,29 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
     const [loading, setLoading] = useState(false);
     const [hash, setHash] = useState();
     const [auctionId, setAuctionId] = useState();
+    const [kwtPrice, setKwtPrice] = useState(0);
 
     const context = useWeb3React();
     const { account, chainId, library } = context;
 
     useEffect(() => {
         getAuctionId();
+        getKwtPrice();
     }, []);
+
+    const getKwtPrice = async () => {
+        try {
+            const res = await axios.get(
+                "https://api.coingecko.com/api/v3/simple/price?ids=kawaii-islands&vs_currencies=usd",
+            );
+            if (res.status === 200) {
+                setKwtPrice(res.data["kawaii-islands"]?.usd);
+            }
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
+    };
 
     const submit = async () => {
         if (!account) return;
@@ -89,12 +111,6 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
         );
     };
 
-    // const purchase = async () => {
-    //     await write("bid", library.provider, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [12, web3.utils.toWei("2")], {
-    //         from: account,
-    //     });
-    // };
-
     return (
         <>
             {showModalLoading && (
@@ -116,67 +132,59 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
                 />
             )}
 
-            <Modal
-                centered
-                show={openBuy}
-                onHide={() => setOpenBuy(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <div className={cx("content")}>
+            <Modal show={openBuy} onHide={() => setOpenBuy(false)} dialogClassName={cx("modal-box")} centered>
+                <Modal.Body className={cx("modal-body")}>
                     <div className={cx("header")}>
-                        <img src={tagIcon} alt="" />
-                        <span>Buy NFT (auctionId: {auctionId})</span>
-                    </div>
-                    <div className={cx("tab-content")}>
-                        <div className={cx("row")}>
-                            <span>Amount</span>
-                            <div className={cx("row-right")}>
-                                <Input
-                                    readOnly
-                                    disableUnderline
-                                    type="number"
-                                    placeholder="0"
-                                    className={cx("input")}
-                                    value={2}
-                                    min={0}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <div className={cx("unit")}>
-                                                <img alt="" src={require("src/assets/icons/kwt.png").default} /> KWT
-                                            </div>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </div>
+                        <div className={cx("left")}>
+                            <img src={tagIcon} alt="tag-price" />
+                            <span className={cx("text")}>Buy item</span>
                         </div>
-                        <div className={cx("row")}>
-                            <span>Sell at</span>
-                            <div className={cx("row-right")}>
-                                <Input
-                                    readOnly
-                                    disableUnderline
-                                    type="number"
-                                    placeholder="0"
-                                    className={cx("input")}
-                                    value={2}
-                                    min={0}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <div className={cx("unit")}>
-                                                <img alt="" src={require("src/assets/icons/kwt.png").default} /> KWT
-                                            </div>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </div>
-                        </div>
-                        <Button className={cx("confirm-btn")} onClick={submit}>
-                            <img src={tagIcon} />
-                            <span>Confirm</span>
-                        </Button>
+
+                        <CloseRoundedIcon className={cx("right")} onClick={() => setOpenBuy(false)} />
                     </div>
-                </div>
+
+                    <div className={cx("body")}>
+                        <div className={cx("body-left")}>
+                            <img src={defaultImage} alt="icon" className={cx("image")} />
+                            <div className={cx("id")}>ID: #{auctionId - 1}</div>
+                        </div>
+                        <div className={cx("body-right")}>
+                            <div className={cx("one-field")}>
+                                <div className={cx("title")}>Price/NFT:</div>
+                                <div className={cx("value")}>
+                                    <span className={cx("kwt-token")}>
+                                        <img src={KWTtoken} alt="kwt-token" />
+                                        <span>&nbsp;2</span>
+                                    </span>
+                                    <span>${floorFormat(kwtPrice, 4)}</span>
+                                </div>
+                            </div>
+
+                            <div className={cx("one-field")}>
+                                <div className={cx("title")}>Amount:</div>
+                                <div className={cx("value")} style={{ fontWeight: "600" }}>
+                                    <span>2</span>
+                                </div>
+                            </div>
+
+                            <div className={cx("one-field")}>
+                                <div className={cx("title")}>Total price:</div>
+                                <div className={cx("value")} style={{ fontWeight: "600" }}>
+                                    <span className={cx("kwt-token")}>
+                                        <img src={KWTtoken} alt="kwt-token" />
+                                        <span>&nbsp; 123</span>
+                                    </span>
+                                    <span>${floorFormat(kwtPrice * 2, 4)}</span>
+                                </div>
+                            </div>
+
+                            <Button className={cx("button")} onClick={submit}>
+                                <img src={tagPriceSmall} alt="tag-price" />
+                                &nbsp; &nbsp; Buy
+                            </Button>
+                        </div>
+                    </div>
+                </Modal.Body>
             </Modal>
         </>
     );

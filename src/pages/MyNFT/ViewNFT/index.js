@@ -31,7 +31,7 @@ const ViewNFT = ({
 
     return (
         <>
-        <div className={cx("right-top-title")}>NFTs balance</div>
+            <div className={cx("right-top-title")}>NFTs balance</div>
             <div className={cx("right-top")}>
                 <div className={cx("right-top-title")}>{displayList?.length} items</div>
 
@@ -93,7 +93,7 @@ const ViewNFT = ({
                     <ListNft
                         loading={loadingListNFT}
                         gameItemList={displayList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
-                        place="boughtNft"
+                        // place="boughtNft"
                         // gameSelected={address}
                     />
                 )}

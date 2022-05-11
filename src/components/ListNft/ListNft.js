@@ -22,20 +22,24 @@ const ListNft = ({ gameItemList, gameSelected, loading, place, place2 }) => {
                                     data={item}
                                     place={place}
                                     handleNavigation={() => {
-                                        if (place2 === "onsale") {
-                                            history.push({
-                                                pathname: `/auction/${item.game}/${item.auctionId}/${item.detail.tokenId}`,
-                                            });
-                                            return;
-                                        }
-                                        if (place === "boughtNft") {
-                                            history.push({
-                                                pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
-                                            });
-                                        } else {
-                                            history.push({
-                                                pathname: `/profile/store/view-nft/${gameSelected}/${item.detail._id}/${item.detail.tokenId}/${item.detail.index}`,
-                                            });
+                                        switch (place) {
+                                            case "onsale":
+                                                history.push({
+                                                    pathname: `/auction/${item.game}/${item.auctionId}/${item.detail.tokenId}`,
+                                                });
+                                                break;
+
+                                            case "boughtNft":
+                                                history.push({
+                                                    pathname: `/view/${item.detail.contract}/${item.detail.tokenId}`,
+                                                });
+                                                break;
+
+                                            default:
+                                                history.push({
+                                                    pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
+                                                });
+                                                break;
                                         }
                                     }}
                                 />

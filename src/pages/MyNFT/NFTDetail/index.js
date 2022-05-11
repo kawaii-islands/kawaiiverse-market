@@ -90,7 +90,7 @@ const NFTDetail = () => {
         <MainLayout>
             <div className={cx("mint-nft-detail")}>
                 <AuctionModal open={open} setOpen={setOpen} nftInfo={nftInfo} />
-                <BuyModal openBuy={openBuy} setOpenBuy={setOpenBuy} />
+                {/* <BuyModal openBuy={openBuy} setOpenBuy={setOpenBuy} /> */}
                 {showModalLoading && (
                     <LoadingModal
                         show={showModalLoading}
@@ -138,9 +138,9 @@ const NFTDetail = () => {
                         <Button className={cx("sell-btn")} onClick={() => setOpen(true)}>
                             Sell NFT
                         </Button>
-                        <Button className={cx("sell-btn")} onClick={() => setOpenBuy(true)}>
+                        {/* <Button className={cx("sell-btn")} onClick={() => setOpenBuy(true)}>
                             Buy NFT
-                        </Button>
+                        </Button> */}
                         <div className={cx("content")}>
                             <span className={cx("title")}>Amount:</span>
                             <span className={cx("value")}>{nftInfo?.balance}</span>

@@ -3,7 +3,6 @@
     max-width: 1180px;
     margin: 0 auto;
     padding-top: 60px;
-    font-family: "Montserrat";
     .breadcrums {
         :global {
             .MuiTypography-root {
@@ -94,8 +93,9 @@
                 color: #f6f7fb;
                 padding: 10px 30px;
                 width: fit-content;
-				font-size: 18px;
-				height: fit-content;
+                font-size: 18px;
+                height: fit-content;
+                font-family: "Mali-Regular", sans-serif;
             }
         }
 
@@ -193,6 +193,12 @@
         .info-image img {
             width: 60px;
             height: 60px;
+        }
+
+        .sell-btn {
+            margin-top: 10px;
+            background: #3c1350;
+            color: #fff;
         }
     }
 }

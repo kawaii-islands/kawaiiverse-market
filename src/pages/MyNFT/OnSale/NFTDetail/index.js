@@ -36,6 +36,7 @@ const NFTDetail = () => {
     const { auctionId, tokenId, gameAddress } = useParams();
     const [nftInfo, setNftInfo] = useState();
     const [loading, setLoading] = useState(true);
+    const [lastestAuctionId, setLastestAuctionId] = useState(0);
     // const { account } = useWeb3React();
     const { pathname } = useLocation();
     const [showModalLoading, setShowModalLoading] = useState(false);
@@ -44,15 +45,22 @@ const NFTDetail = () => {
     const [hash, setHash] = useState();
     const [open, setOpen] = useState(false);
     const [loadingModal, setLoadingModal] = useState(false);
+
     useEffect(() => {
         getAuction();
+        getAuctionId();
     }, [useParams, account]);
 
     let pathnames = pathname.split("/").filter(Boolean);
     pathnames.splice(5, 1);
     pathnames.splice(2, 1);
     pathnames.splice(1, 4);
-   
+
+    const getAuctionId = async () => {
+        const auction = await read("auctionId", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, []);
+        setLastestAuctionId(auction);
+    };
+
     const getAuction = async () => {
         setLoading(true);
         try {
@@ -60,7 +68,9 @@ const NFTDetail = () => {
             let nft;
             let auction = await read("getAuction", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [auctionId]);
             console.log(auction.status);
-            let currentPrice = await read("getCurrentPrice", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [auctionId]);
+            let currentPrice = await read("getCurrentPrice", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [
+                auctionId,
+            ]);
             // struct Auction {
             //     address erc1155; // storegame
             //     address erc721; // nft
@@ -77,32 +87,41 @@ const NFTDetail = () => {
             if (resNftInfo.status === 200) {
                 nft = { balance: auction[5][0], ...resNftInfo.data.data, auction, currentPrice };
             }
-            console.log(nft)
+            console.log(nft);
             setNftInfo(nft);
-            
         } catch (error) {
             toast.error(error);
             console.log(error);
-            
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
-    
+
     const cancelAuction = async () => {
         try {
-            if(nftInfo.auction.status !== "0"){
-                toast.error("Auction already cancel")
+            setShowModalLoading(true);
+            if (nftInfo.auction.status !== "0") {
+                toast.error("Auction already cancel");
                 return;
             }
-            await write("cancelAuction", library.provider, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [auctionId], {
-                from: account
-            });
+            await write(
+                "cancelAuction",
+                library.provider,
+                MARKETPLACE_ADDRESS,
+                MARKETPLACE_ABI,
+                [lastestAuctionId - 1],
+                {
+                    from: account,
+                },
+            );
         } catch (error) {
+            setStepLoading(3);
             console.log(error);
             toast.error(error);
+        } finally {
+            setLoading(false);
         }
-    }
+    };
     return loading ? (
         <LoadingPage />
     ) : (
@@ -110,7 +129,7 @@ const NFTDetail = () => {
             <div className={cx("mint-nft-detail")}>
                 {showModalLoading && (
                     <LoadingModal
-                        show={showModalLoading}
+                        show={true}
                         network={"BscScan"}
                         loading={loadingModal}
                         title={loadingTitle}
@@ -140,8 +159,6 @@ const NFTDetail = () => {
                             />
                         </div>
                     </Col>
-
-                    
 
                     <Col offset={1} span={13} className={cx("right")}>
                         <div className={cx("top")}>

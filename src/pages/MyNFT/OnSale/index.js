@@ -69,6 +69,7 @@ const OnSale = ({
     useEffect(() => {
         getOnSale();
     }, [account]);
+
     const getOnSale = async () => {
         if (!account) return;
         try {
@@ -76,9 +77,7 @@ const OnSale = ({
                 account,
             ]);
             auctionList = await Promise.all(
-                auctionList.map(async (auction,idx) => {
-                    
-                    
+                auctionList.map(async (auction, idx) => {
                     let gameAddress = auction[0];
                     let nftId = auction[3][0];
                     let balance = auction[4];
@@ -90,9 +89,9 @@ const OnSale = ({
                 }),
             );
             auctionList = auctionList.filter(auction => {
-                console.log(auction.auction.status === "1");
-                return auction.auction.status === "1";
-            })
+                console.log(auction.auction.status === "0");
+                return auction.auction.status === "0";
+            });
             setAuctionList(auctionList);
             return auctionList;
         } catch (error) {
@@ -165,8 +164,9 @@ const OnSale = ({
                     <ListNft
                         loading={loadingListNFT}
                         gameItemList={auctionList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
-                        place="boughtNft"
-                        place2="onsale"
+                        // place="boughtNft"
+                        // place2="onsale"
+                        place="onsale"
                         // gameSelected={address}
                     />
                 )}
