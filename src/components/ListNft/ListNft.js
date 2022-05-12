@@ -6,31 +6,45 @@ import styles from "./ListNft.module.scss";
 import NFTItem from "src/components/NFTItem/NFTItem";
 
 const cx = cn.bind(styles);
-const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
+const ListNft = ({ gameItemList, gameSelected, loading, place, place2 }) => {
     const history = useHistory();
+    console.log(gameItemList);
     return (
         <>
             {gameItemList.length > 0 ? (
                 <div className={cx("list-nft")}>
-                    {gameItemList.map((item, index) => item && (
-                        <NFTItem
-                            key={`nft-item-${index}`}
-                            isStore={true}
-                            data={item}
-                            place={place}
-                            handleNavigation={() => {
-                                if (place === "boughtNft") {
-                                    history.push({
-                                        pathname: `/my-nft/${item.detail.contract}/${item.detail.tokenId}`,
-                                    });
-                                } else {
-                                    history.push({
-                                        pathname: `/profile/store/view-nft/${gameSelected}/${item.detail._id}/${item.detail.tokenId}/${item.detail.index}`,
-                                    });
-                                }
-                            }}
-                        />
-                    ))}
+                    {gameItemList.map(
+                        (item, index) =>
+                            item && (
+                                <NFTItem
+                                    key={`nft-item-${index}`}
+                                    isStore={true}
+                                    data={item}
+                                    place={place}
+                                    handleNavigation={() => {
+                                        switch (place) {
+                                            case "onsale":
+                                                history.push({
+                                                    pathname: `/auction/${item.game}/${item.auctionId}/${item.detail.tokenId}`,
+                                                });
+                                                break;
+
+                                            case "boughtNft":
+                                                history.push({
+                                                    pathname: `/view/${item.detail.contract}/${item.detail.tokenId}`,
+                                                });
+                                                break;
+
+                                            default:
+                                                history.push({
+                                                    pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
+                                                });
+                                                break;
+                                        }
+                                    }}
+                                />
+                            ),
+                    )}
                 </div>
             ) : (
                 <>

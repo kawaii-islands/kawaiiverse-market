@@ -1,44 +1,46 @@
 import React, { useEffect, useState } from "react";
 import cn from "classnames/bind";
-import styles from "./Filter.module.scss";
+import styles from "./FilterStore.module.scss";
 import filter from "../../assets/icons/filter.svg";
+import { Collapse } from "antd";
 import logoKawaii from "../../assets/images/logo_kawaii.png";
 import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import { pink } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
-
+const { Panel } = Collapse;
 const cx = cn.bind(styles);
 
-const Filter = ({ gameList, setGameSelected, gameSelected,activeTab,setActiveTab }) => {
-    // const [openListGame, setOpenListGame] = useState(true);
-        // const [tab, setTab] = useState(1);
-    // const handleGameClick = (address, name, logoUrl) => {
-    //     if (checkGameIfIsSelected(address) !== -1) {
-    //         setGameSelected(gameSelected => {
-    //             const copyGame = [...gameSelected];
-    //             copyGame.splice(checkGameIfIsSelected(address), 1);
-    //             return copyGame;
-    //         });
-    //     } else {
-    //         setGameSelected(gameSelected => [
-    //             ...gameSelected,
-    //             { gameAddress: address, gameName: name, logoUrl: logoUrl },
-    //         ]);
-    //     }
-    // };
-    // const checkGameIfIsSelected = address => {
-    //     let count = -1;
-    //     gameSelected.map((game, idx) => {
-    //         if (game.gameAddress === address) {
-    //             count = idx;
-    //         }
-    //     });
-    //     return count;
-    // };
+const FilterStore = ({ gameList, setGameSelected, gameSelected }) => {
+    const [openListGame, setOpenListGame] = useState(true);
+
+    const handleGameClick = (address, name, logoUrl) => {
+        if (checkGameIfIsSelected(address) !== -1) {
+            setGameSelected(gameSelected => {
+                const copyGame = [...gameSelected];
+                copyGame.splice(checkGameIfIsSelected(address), 1);
+                return copyGame;
+            });
+        } else {
+            setGameSelected(gameSelected => [
+                ...gameSelected,
+                { gameAddress: address, gameName: name, logoUrl: logoUrl },
+            ]);
+        }
+    };
+    const checkGameIfIsSelected = address => {
+        let count = -1;
+        gameSelected.map((game, idx) => {
+            if (game.gameAddress === address) {
+                count = idx;
+            }
+        });
+        return count;
+    };
     return (
         <div className={cx("filter")}>
-            {/* <div className={cx("card-header")}>
+            <div className={cx("card-header")}>
                 <img src={filter} alt="filter" />
                 <span className={cx("title")}>Filter</span>
             </div>
@@ -62,6 +64,7 @@ const Filter = ({ gameList, setGameSelected, gameSelected,activeTab,setActiveTab
                                 });
                                 return (
                                     <div
+                                        // className={cx("game-name", condition && "game-active")}
                                         className={cx("game-name")}
                                         key={idx}
                                         onClick={() =>
@@ -90,15 +93,32 @@ const Filter = ({ gameList, setGameSelected, gameSelected,activeTab,setActiveTab
                         </div>
                     )}
                 </div>
-            </div> */}
-            
-            <div className={cx("menu")}>
-                <div onClick={() => setActiveTab(1)} className={cx(activeTab === 1 && "menu--active")}>Account</div>
-                <div onClick={() => setActiveTab(2)} className={cx(activeTab === 2 && "menu--active")}>On sale</div>
-                <div onClick={() => setActiveTab(3)} className={cx(activeTab === 3 && "menu--active")}>Sale bundle</div>
+                {/* <Collapse
+          defaultActiveKey={["1"]}
+          expandIconPosition="right"
+          bordered={false}
+          className="site-collapse-custom-collapse"
+        >
+          <Panel header="Game" key="1" className="site-collapse-custom-panel">
+            <div className={cx("panel-content")}>
+              {gameList?.map((gameName, idx) => (
+                <div
+                  className={gameName.gameAddress === gameSelected ? cx("name-selected") : cx("name")}
+                  key={idx}
+                  onClick={() => handleGameClick(gameName.gameAddress, gameName.gameName)}
+                >
+                  <img src={logoKawaii} className={cx("name-avatar")} alt="" />
+                  <span className={gameName.gameAddress === gameSelected ? cx("name-selected-text") : cx("name-text")}>
+                    {gameName.gameName}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Panel>
+        </Collapse> */}
             </div>
         </div>
     );
 };
 
-export default Filter;
+export default FilterStore;

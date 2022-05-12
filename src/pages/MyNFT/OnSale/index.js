@@ -1,4 +1,5 @@
 import cn from "classnames/bind";
+import { useState, useEffect } from "react";
 import styles from "../index.module.scss";
 import { InputAdornment, TextField, Input } from "@mui/material";
 import { Search as SearchIcon } from "@material-ui/icons";
@@ -9,11 +10,31 @@ import cancel from "src/assets/icons/cancel.svg";
 import ListSkeleton from "src/components/ListSkeleton/ListSkeleton";
 import ListNft from "src/components/ListNft/ListNft";
 import { useHistory, useParams } from "react-router";
-
+import { toast } from "react-toastify";
+import NFT1155_ABI from "src/utils/abi/KawaiiverseNFT1155.json";
+import RELAY_ABI from "src/utils/abi/relay.json";
+import KAWAIIVERSE_NFT1155_ABI from "src/utils/abi/KawaiiverseNFT1155.json";
+import {
+    KAWAIIVERSE_STORE_ADDRESS,
+    KAWAII_TOKEN_ADDRESS,
+    RELAY_ADDRESS,
+    MARKETPLACE_ADDRESS,
+} from "src/consts/address";
+import MARKETPLACE_ABI from "src/utils/abi/KawaiiMarketplace.json";
+import KAWAII_STORE_ABI from "src/utils/abi/KawaiiverseStore.json";
+import { URL } from "src/consts/constant";
+import KAWAII_TOKEN_ABI from "src/utils/abi/KawaiiToken.json";
+import { read, write, sign, createNetworkOrSwitch } from "src/services/web3";
+import { useWeb3React } from "@web3-react/core";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Web3 from "web3";
+import axios from "axios";
+import { BSC_CHAIN_ID, BSC_rpcUrls } from "src/consts/blockchain";
 const cx = cn.bind(styles);
 const PAGE_SIZE = 15;
 
-const ViewNFT = ({
+const OnSale = ({
     displayList,
     search,
     handleSearch,
@@ -27,13 +48,63 @@ const ViewNFT = ({
     itemRender,
     setIsSellNFT,
 }) => {
+    const context = useWeb3React();
+    const [auctionList, setAuctionList] = useState([]);
+    // struct Auction {
+    //     address erc1155; // storegame
+    //     address erc721; // nft
+    //     address seller;
+    //     uint256[] erc1155TokenIds;
+    //     uint256[] amounts;
+    //     uint256[] erc721TokenIds;
+    //     uint128 startingPrice;
+    //     uint128 endingPrice;
+    //     uint64 duration;
+    //     uint64 startedAt;
+    //     Status status;
+    // }
+    const { account, chainId, library } = context;
     const history = useHistory();
+
+    useEffect(() => {
+        getOnSale();
+    }, [account]);
+
+    const getOnSale = async () => {
+        if (!account) return;
+        try {
+            let auctionList = await read("getAuctionByAddress", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [
+                account,
+            ]);
+            auctionList = await Promise.all(
+                auctionList.map(async (auction, idx) => {
+                    let gameAddress = auction[0];
+                    let nftId = auction[3][0];
+                    let balance = auction[4];
+                    const res = await axios.get(`${URL}/v1/nft/${gameAddress.toLowerCase()}/${nftId}`);
+                    // console.log("STATUS :", auction.status);
+                    if (res.status === 200) {
+                        return { auction, balance, detail: res.data.data, game: gameAddress, auctionId: idx };
+                    }
+                }),
+            );
+            auctionList = auctionList.filter(auction => {
+                console.log(auction.auction.status === "0");
+                return auction.auction.status === "0";
+            });
+            setAuctionList(auctionList.reverse());
+            return auctionList;
+        } catch (error) {
+            toast.error(error);
+            console.log(error);
+        }
+    };
 
     return (
         <>
-            <div className={cx("right-top-title")}>NFTs balance</div>
+            <div className={cx("right-top-title")}>On Sale</div>
             <div className={cx("right-top")}>
-                <div className={cx("right-top-title")}>{displayList?.length} items</div>
+                <div className={cx("right-top-title")}>{auctionList?.length} items</div>
 
                 <Input
                     disableUnderline
@@ -92,9 +163,10 @@ const ViewNFT = ({
                 ) : (
                     <ListNft
                         loading={loadingListNFT}
-                        gameItemList={displayList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
-                        place="view"
+                        gameItemList={auctionList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
                         // place="boughtNft"
+                        // place2="onsale"
+                        place="onsale"
                         // gameSelected={address}
                     />
                 )}
@@ -105,7 +177,7 @@ const ViewNFT = ({
                         pageSize={PAGE_SIZE}
                         showSizeChanger={false}
                         current={currentPage}
-                        total={displayList?.length}
+                        total={auctionList?.length}
                         onChange={page => setCurrentPage(page)}
                         itemRender={itemRender}
                     />
@@ -115,4 +187,4 @@ const ViewNFT = ({
     );
 };
 
-export default ViewNFT;
+export default OnSale;

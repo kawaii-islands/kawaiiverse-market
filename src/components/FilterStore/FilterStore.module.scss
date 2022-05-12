@@ -163,18 +163,4 @@
         line-height: 150%;
         color: #ffffff;
     }
-    .menu{
-        color: #fff;
-        font-size: 24px;
-        div{
-            padding: 12px;
-        }
-        div:hover{
-            background: blueviolet;
-            
-        }
-        &--active{
-            background: blueviolet;
-        }
-    }
 }
