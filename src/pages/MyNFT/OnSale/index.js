@@ -36,20 +36,16 @@ const PAGE_SIZE = 15;
 
 const OnSale = ({
     displayList,
-    search,
-    handleSearch,
+    
     menu,
-    gameSelected,
-    handleDeleteFilter,
-    handleClearFilter,
-    loadingListNFT,
-    currentPage,
-    setCurrentPage,
+    
     itemRender,
-    setIsSellNFT,
+    
 }) => {
     const context = useWeb3React();
     const [auctionList, setAuctionList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
     // struct Auction {
     //     address erc1155; // storegame
     //     address erc721; // nft
@@ -73,6 +69,7 @@ const OnSale = ({
     const getOnSale = async () => {
         if (!account) return;
         try {
+            setLoading(true);
             let auctionList = await read("getAuctionByAddress", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [
                 account,
             ]);
@@ -89,7 +86,7 @@ const OnSale = ({
                 }),
             );
             auctionList = auctionList.filter(auction => {
-                console.log(auction.auction.status === "0");
+                
                 return auction.auction.status === "0";
             });
             setAuctionList(auctionList.reverse());
@@ -97,6 +94,8 @@ const OnSale = ({
         } catch (error) {
             toast.error(error);
             console.log(error);
+        } finally{
+            setLoading(false);
         }
     };
 
@@ -109,8 +108,8 @@ const OnSale = ({
                 <Input
                     disableUnderline
                     placeholder="Search NFT by name, id,..."
-                    value={search}
-                    onChange={handleSearch}
+                    // value={search}
+                    // onChange={handleSearch}
                     className={cx("search")}
                     endAdornment={
                         <InputAdornment position="end">
@@ -137,7 +136,7 @@ const OnSale = ({
                 </Button> */}
             </div>
 
-            <div className={cx("right-filter")}>
+            {/* <div className={cx("right-filter")}>
                 {gameSelected?.map((game, idx) => (
                     <div className={cx("filter-box")} key={game.gameAddress}>
                         <img
@@ -155,14 +154,14 @@ const OnSale = ({
                         CLEAR ALL
                     </div>
                 )}
-            </div>
+            </div> */}
 
             <Row gutter={[20, 20]} className={cx("list")}>
-                {loadingListNFT ? (
+                {loading ? (
                     <ListSkeleton page={"store"} />
                 ) : (
                     <ListNft
-                        loading={loadingListNFT}
+                        loading={loading}
                         gameItemList={auctionList.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)}
                         // place="boughtNft"
                         // place2="onsale"

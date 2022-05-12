@@ -6,7 +6,7 @@ import styles from "./ListNft.module.scss";
 import NFTItem from "src/components/NFTItem/NFTItem";
 
 const cx = cn.bind(styles);
-const ListNft = ({ gameItemList, gameSelected, loading, place, place2 }) => {
+const ListNft = ({ gameItemList, gameSelected, loading, place, }) => {
     const history = useHistory();
     console.log(gameItemList);
     return (

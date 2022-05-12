@@ -70,7 +70,7 @@ const NFTItem = ({ onClick, data, handleNavigation, isStore, place }) => {
                     <div className={cx("bottom")}>
                         <div className={cx("title")}>{data?.detail.name || "Name"}</div>
                         <div className={cx("nftId")}>#{data?.detail.tokenId}</div>
-                        {place !== "boughtNft" && (
+                        {place !== "boughtNft" || place !== "view" && (
                             <div className={cx("number-box")}>
                                 <span className={cx("number")}>
                                     {/* {data.price ? Number(web3.utils.fromWei(data.price.toString())) : 0} KWT */}
