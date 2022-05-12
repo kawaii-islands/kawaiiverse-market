@@ -18,6 +18,7 @@ import defaultImage from "src/assets/icons/default_image.svg";
 import tagPriceSmall from "src/assets/icons/tagPriceSmall.svg";
 import axios from "axios";
 import { floorFormat } from "src/utils/formatNumber";
+import { useHistory } from "react-router";
 
 import KAWAII_TOKEN_ABI from "src/utils/abi/KawaiiToken.json";
 import MARKETPLACE_ABI from "src/utils/abi/KawaiiMarketplace.json";
@@ -31,6 +32,7 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
     const [auctionId, setAuctionId] = useState();
     const [kwtPrice, setKwtPrice] = useState(0);
     const price = 1000;
+    const history = useHistory();
 
     const context = useWeb3React();
     const { account, chainId, library } = context;
@@ -53,7 +55,7 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
         const userAllowance = await getUserAllowance();
         console.log(web3.utils.fromWei(userAllowance.toString()));
         console.log(" " + price);
-        if (price > web3.utils.fromWei(userAllowance.toString())) approve(price.toString());
+        if (price > web3.utils.fromWei(userAllowance.toString())) await approve(price.toString());
     };
 
     const getKwtPrice = async () => {
@@ -102,6 +104,9 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
                 callback,
             );
             setStepLoading(2);
+            history.push({
+                pathname: `/profile`,
+            });
         } catch (error) {
             console.log(error);
             setStepLoading(3);
@@ -116,13 +121,13 @@ const BuyModal = ({ openBuy, setOpenBuy }) => {
         setAuctionId(auction);
     };
 
-    const approve = async amount => {
-        await write(
+    const approve = async () => {
+        return await write(
             "approve",
             library.provider,
             KAWAII_TOKEN_ADDRESS,
             KAWAII_TOKEN_ABI,
-            [MARKETPLACE_ADDRESS, web3.utils.toWei(amount)],
+            [MARKETPLACE_ADDRESS, web3.utils.toWei("999999999")],
             {
                 from: account,
             },

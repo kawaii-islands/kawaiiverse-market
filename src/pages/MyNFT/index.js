@@ -422,7 +422,7 @@ const MyNFT = () => {
                         )} */}
                         {activeTab === 1 && (
                             <ViewNFT
-                                displayList={displayList}
+                                displayList={displayList.reverse()}
                                 search={search}
                                 handleSearch={handleSearch}
                                 menu={menu}

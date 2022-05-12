@@ -64,13 +64,21 @@ const NFTDetail = () => {
     const getAuction = async () => {
         setLoading(true);
         try {
+            const auctionLastest = await read("auctionId", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, []);
+            setLastestAuctionId(auctionLastest);
+            console.log(auctionLastest);
+
             const resNftInfo = await axios.get(`${URL}/v1/nft/${gameAddress.toLowerCase()}/${tokenId}`);
+            console.log(resNftInfo);
             let nft;
-            let auction = await read("getAuction", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [auctionId]);
+            let auction = await read("getAuction", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [
+                auctionLastest - 1,
+            ]);
             console.log(auction.status);
             let currentPrice = await read("getCurrentPrice", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [
-                auctionId,
+                auctionLastest - 1,
             ]);
+            console.log(currentPrice);
             // struct Auction {
             //     address erc1155; // storegame
             //     address erc721; // nft

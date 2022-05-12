@@ -92,7 +92,7 @@ const OnSale = ({
                 console.log(auction.auction.status === "0");
                 return auction.auction.status === "0";
             });
-            setAuctionList(auctionList);
+            setAuctionList(auctionList.reverse());
             return auctionList;
         } catch (error) {
             toast.error(error);
@@ -104,7 +104,7 @@ const OnSale = ({
         <>
             <div className={cx("right-top-title")}>On Sale</div>
             <div className={cx("right-top")}>
-                <div className={cx("right-top-title")}>{displayList?.length} items</div>
+                <div className={cx("right-top-title")}>{auctionList?.length} items</div>
 
                 <Input
                     disableUnderline
