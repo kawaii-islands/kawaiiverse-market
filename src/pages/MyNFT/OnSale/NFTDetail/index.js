@@ -107,6 +107,7 @@ const NFTDetail = () => {
 
     const cancelAuction = async () => {
         try {
+            setStepLoading(0);
             setShowModalLoading(true);
             if (nftInfo.auction.status !== "0") {
                 toast.error("Auction already cancel");
@@ -122,12 +123,14 @@ const NFTDetail = () => {
                     from: account,
                 },
             );
+            setStepLoading(2);
         } catch (error) {
             setStepLoading(3);
             console.log(error);
             toast.error(error);
         } finally {
             setLoading(false);
+            // setShowModalLoading(false);
         }
     };
     return loading ? (

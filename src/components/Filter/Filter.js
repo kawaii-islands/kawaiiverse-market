@@ -95,7 +95,7 @@ const Filter = ({ gameList, setGameSelected, gameSelected,activeTab,setActiveTab
             <div className={cx("menu")}>
                 <div onClick={() => setActiveTab(1)} className={cx(activeTab === 1 && "menu--active")}>Account</div>
                 <div onClick={() => setActiveTab(2)} className={cx(activeTab === 2 && "menu--active")}>On sale</div>
-                <div onClick={() => setActiveTab(3)} className={cx(activeTab === 3 && "menu--active")}>Sale bundle</div>
+                <div onClick={() => setActiveTab(3)} className={cx(activeTab === 3 && "menu--active")}>Sale</div>
             </div>
         </div>
     );

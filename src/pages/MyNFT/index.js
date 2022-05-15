@@ -438,18 +438,11 @@ const MyNFT = () => {
                         )}
                         {activeTab === 2 && (
                             <OnSale
-                                displayList={[]}
-                                search={search}
-                                handleSearch={handleSearch}
+                                
                                 menu={menu}
-                                gameSelected={gameSelected}
-                                handleDeleteFilter={handleDeleteFilter}
-                                handleClearFilter={handleClearFilter}
-                                loadingListNFT={loadingListNFT}
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
+                                
                                 itemRender={itemRender}
-                                setIsSellNFT={setIsSellNFT}
+                                
                             />
                         )}
                         {activeTab === 3 && (

@@ -94,7 +94,7 @@ const Filter = ({ gameList, setGameSelected, gameSelected }) => {
             <div className={cx("menu")}>
                 <div>Account</div>
                 <div>On sale</div>
-                <div>Sale bundle</div>
+                <div>Sale</div>
             </div>
         </div>
     );
