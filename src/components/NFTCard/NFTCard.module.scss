@@ -1,0 +1,212 @@
+.nft-card {
+    width: 20%;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    @media (max-width: 1626px) {
+        width: 25%;
+    }
+    @media (max-width: 1378px) {
+        width: 33.33%;
+    }
+
+    @media (max-width: 1120px) {
+        width: 50%;
+    }
+    @media (max-width: 860px) {
+        width: 100%;
+    }
+    @media (max-width: 768px) {
+        width: 50%;
+    }
+    @media (max-width: 600px) {
+        width: 100%;
+    }
+    &-container {
+        background: linear-gradient(180deg, #fdf5e8 0%, #fde7cf 100%);
+        border: 1px solid #cf9c8f;
+        border-radius: 7px;
+        padding: 20px;
+
+        width: 240px;
+        float: right;
+        @media (max-width: 868px) {
+            float: unset;
+            margin: 0 auto;
+        }
+        &:hover {
+            transform: translateY(-3px);
+            -ms-transform: translateY(-3px); /* IE 9 */
+            box-shadow: rgba(4, 17, 29, 0.5) 0px 0px 8px 0px;
+            transition: all 0.1s ease 0s;
+        }
+        cursor: pointer;
+        &-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            img {
+                height: 32px;
+                margin-left: 10px;
+            }
+            .tag {
+                background: #d2b0a3;
+                box-shadow: 0px 4px 4px #eed0c4;
+                border-radius: 4px;
+                padding: 5px 7px;
+                color: #f3f3f3;
+            }
+        }
+
+        .total {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 150%;
+            text-transform: capitalize;
+            color: #833f1d;
+        }
+
+        .image {
+            margin-bottom: 22px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            .avatar {
+                position: relative;
+                z-index: 1;
+                max-width: 100%;
+                max-height: 200px;
+                &:global(.f1) {
+                    max-height: 160px;
+                }
+            }
+            .tag {
+                position: absolute;
+                z-index: 1;
+                width: 55px;
+                height: 48px;
+                right: 0;
+                top: -30px;
+            }
+            .balance {
+                position: absolute;
+                z-index: 2;
+                font-weight: bold;
+                font-size: 16px;
+                color: #833f1d;
+                width: 36px;
+                height: 36px;
+                border: 1px solid #a86c60;
+                box-sizing: border-box;
+                border-radius: 6px;
+                right: 4px;
+                bottom: -20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #833f1d;
+            margin-bottom: 20px;
+        }
+        .price {
+            display: flex;
+            align-items: center;
+            color: #833f1d;
+            img {
+                width: 25px;
+                height: 25px;
+                margin-right: 6px;
+            }
+            .amount {
+                font-weight: bold;
+                font-size: 18px;
+                margin-right: 4px;
+            }
+            .dollar {
+                font-weight: 600;
+                font-size: 14px;
+                color: #cb8b91;
+            }
+        }
+
+        .onSale {
+            position: relative;
+
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 4px;
+                padding: 1.2px;
+                background: linear-gradient(164deg, #f2c314 0%, #fc3832 100%);
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: destination-out;
+                mask-composite: exclude;
+            }
+
+            .content {
+                padding: 6px 8px;
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+
+                .left {
+                    display: flex;
+                    align-items: baseline;
+                    width: 65%;
+
+                    .title {
+                        font-weight: bold;
+                        font-size: 16px;
+                        line-height: 150%;
+                        background: -webkit-linear-gradient(294deg, #f2c314 0%, #fc3832 80%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+
+                    .subTitle {
+                        font-weight: normal;
+                        font-size: 10px;
+                        line-height: 150%;
+                        text-transform: capitalize;
+                        color: #833f1d;
+                        padding-left: 2px;
+                    }
+                }
+
+                .right {
+                    display: flex;
+                    align-items: baseline;
+                    width: 35%;
+                    justify-content: space-around;
+
+                    .line {
+                        background: -webkit-linear-gradient(180deg, #f2c314 0%, #fc3832 100%);
+                        width: 1.5px;
+                        height: 12px;
+                    }
+
+                    .value {
+                        font-weight: bold;
+                        font-size: 16px;
+                        line-height: 150%;
+                        text-transform: capitalize;
+                        color: #e74a4a;
+                    }
+                }
+            }
+        }
+    }
+}

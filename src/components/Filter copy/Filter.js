@@ -94,7 +94,10 @@ const Filter = ({ gameList, setGameSelected, gameSelected }) => {
             <div className={cx("menu")}>
                 <div>Account</div>
                 <div>On sale</div>
-                <div>Sale</div>
+                <div>
+                    <img src={tagIcon} />
+                    Sale
+                </div>
             </div>
         </div>
     );

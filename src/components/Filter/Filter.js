@@ -7,12 +7,13 @@ import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import Checkbox from "@mui/material/Checkbox";
+import tagIcon from "src/assets/icons/tag1.png";
 
 const cx = cn.bind(styles);
 
-const Filter = ({ gameList, setGameSelected, gameSelected,activeTab,setActiveTab }) => {
+const Filter = ({ gameList, setGameSelected, gameSelected, activeTab, setActiveTab }) => {
     // const [openListGame, setOpenListGame] = useState(true);
-        // const [tab, setTab] = useState(1);
+    // const [tab, setTab] = useState(1);
     // const handleGameClick = (address, name, logoUrl) => {
     //     if (checkGameIfIsSelected(address) !== -1) {
     //         setGameSelected(gameSelected => {
@@ -91,11 +92,18 @@ const Filter = ({ gameList, setGameSelected, gameSelected,activeTab,setActiveTab
                     )}
                 </div>
             </div> */}
-            
+
             <div className={cx("menu")}>
-                <div onClick={() => setActiveTab(1)} className={cx(activeTab === 1 && "menu--active")}>Account</div>
-                <div onClick={() => setActiveTab(2)} className={cx(activeTab === 2 && "menu--active")}>On sale</div>
-                <div onClick={() => setActiveTab(3)} className={cx(activeTab === 3 && "menu--active")}>Sale</div>
+                <div onClick={() => setActiveTab(1)} className={cx(activeTab === 1 && "menu--active")}>
+                    Account
+                </div>
+                <div onClick={() => setActiveTab(2)} className={cx(activeTab === 2 && "menu--active")}>
+                    On sale
+                </div>
+                <div onClick={() => setActiveTab(3)} className={cx(activeTab === 3 && "menu--active")}>
+                    <img src={tagIcon} className={cx("filter-icon")} />
+                    Sale
+                </div>
             </div>
         </div>
     );

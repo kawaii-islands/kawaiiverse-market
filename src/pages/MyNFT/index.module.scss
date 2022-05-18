@@ -4,6 +4,8 @@ $mobile: 576px;
 // $break-point-1: 1180px;
 $break-point-2: 912px;
 $break-point-3: 767px;
+@import url("https://fonts.googleapis.com/css2?family=Play&display=swap");
+
 .profile {
     :global {
         .ant-collapse-item-active,
@@ -65,9 +67,12 @@ $break-point-3: 767px;
             padding: 20px 48px 20px 48px;
             height: fit-content;
             width: calc(100vw - 300px);
+            color: #833f1d;
+            font-family: Play;
 
             .right-top {
                 margin-top: 40px;
+                margin-bottom: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -78,22 +83,24 @@ $break-point-3: 767px;
                 }
 
                 &-title {
-                    font-weight: bold;
-                    font-size: 20px;
                     line-height: 26px;
-                    color: #ffffff;
+                    font-weight: 700;
+                    font-size: 20px;
+                    // color: #ffffff;
                 }
 
                 .search {
                     width: 380px;
-                    border-bottom: 2px solid #ffffff;
-                    color: #ffffff !important;
+                    // border-bottom: 2px solid #ffffff;
+                    border: 1px solid rgba(148, 72, 80, 0.5);
+                    border-radius: 6px;
+                    padding: 7px;
                     display: flex;
-                    align-items: center;
+                    align-items: left;
                     justify-content: space-between;
-                    margin-left: auto;
+                    margin-right: auto;
                     font-size: 16px !important;
-                    font-family: "Mali-Regular";
+                    font-family: "Play";
 
                     @media (max-width: $break-point-3) {
                         margin: 20px 0px;
@@ -101,7 +108,7 @@ $break-point-3: 767px;
 
                     .icon {
                         cursor: pointer;
-                        color: #ffffff;
+                        color: #833f1d;
                     }
                 }
 
@@ -111,13 +118,12 @@ $break-point-3: 767px;
                     // margin-left: auto;
 
                     .drop-down {
-                        background: #56428f;
-                        color: #ffffff;
-                        border-radius: 6px;
                         padding: 10.5px 12px;
                         width: 144px;
                         margin-left: 36px;
                         font-size: 14px;
+                        border: 1px solid rgba(148, 72, 80, 0.5);
+                        border-radius: 6px;
                         :global {
                             .anticon-down {
                                 font-weight: bold;
@@ -212,7 +218,7 @@ $break-point-3: 767px;
             }
 
             .list {
-                padding-top: 40px;
+                // padding-top: 40px;
             }
         }
     }
@@ -240,18 +246,21 @@ $break-point-3: 767px;
     margin-top: 30px;
 }
 .menu-dropdown {
-    background-color: #56428f !important;
+    background-color: #fdecd9 !important;
     padding: 0px;
+    border-radius: 6px;
     li {
-        color: #fff !important;
+        color: #833f1d;
         padding: 12px 10px;
         // font-weight: 600;
     }
     li:hover {
-        background-color: #56428f !important;
+        background-color: #833f1d !important;
+        color: #fff !important;
     }
     &--active {
-        background: linear-gradient(94.08deg, #7f00ff -1.88%, #e100ff 100%);
+        background: #833f1d !important;
+        color: #fff !important;
     }
     :global {
         .ant-dropdown {

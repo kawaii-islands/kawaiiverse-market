@@ -4,9 +4,10 @@ import { useHistory } from "react-router";
 import { Empty, Row } from "antd";
 import styles from "./ListNft.module.scss";
 import NFTItem from "src/components/NFTItem/NFTItem";
+import NFTCard from "src/components/NFTCard/NFTCard";
 
 const cx = cn.bind(styles);
-const ListNft = ({ gameItemList, gameSelected, loading, place, }) => {
+const ListNft = ({ gameItemList, gameSelected, loading, place }) => {
     const history = useHistory();
     console.log(gameItemList);
     return (
@@ -16,33 +17,36 @@ const ListNft = ({ gameItemList, gameSelected, loading, place, }) => {
                     {gameItemList.map(
                         (item, index) =>
                             item && (
-                                <NFTItem
-                                    key={`nft-item-${index}`}
-                                    isStore={true}
-                                    data={item}
-                                    place={place}
-                                    handleNavigation={() => {
-                                        switch (place) {
-                                            case "onsale":
-                                                history.push({
-                                                    pathname: `/auction/${item.game}/${item.auctionId}/${item.detail.tokenId}`,
-                                                });
-                                                break;
+                                <>
+                                    <NFTCard key={`nft-item-${index}-a`} data={item} />
+                                    {/* <NFTItem
+                                        key={`nft-item-${index}`}
+                                        isStore={true}
+                                        data={item}
+                                        place={place}
+                                        handleNavigation={() => {
+                                            switch (place) {
+                                                case "onsale":
+                                                    history.push({
+                                                        pathname: `/auction/${item.game}/${item.auctionId}/${item.detail.tokenId}`,
+                                                    });
+                                                    break;
 
-                                            case "boughtNft":
-                                                history.push({
-                                                    pathname: `/view/${item.detail.contract}/${item.detail.tokenId}`,
-                                                });
-                                                break;
+                                                case "boughtNft":
+                                                    history.push({
+                                                        pathname: `/view/${item.detail.contract}/${item.detail.tokenId}`,
+                                                    });
+                                                    break;
 
-                                            default:
-                                                history.push({
-                                                    pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
-                                                });
-                                                break;
-                                        }
-                                    }}
-                                />
+                                                default:
+                                                    history.push({
+                                                        pathname: `/profile/${item.detail.contract}/${item.detail.tokenId}`,
+                                                    });
+                                                    break;
+                                            }
+                                        }}
+                                    /> */}
+                                </>
                             ),
                     )}
                 </div>

@@ -36,11 +36,10 @@ const PAGE_SIZE = 15;
 
 const OnSale = ({
     displayList,
-    
+
     menu,
-    
+
     itemRender,
-    
 }) => {
     const context = useWeb3React();
     const [auctionList, setAuctionList] = useState([]);
@@ -73,6 +72,7 @@ const OnSale = ({
             let auctionList = await read("getAuctionByAddress", BSC_CHAIN_ID, MARKETPLACE_ADDRESS, MARKETPLACE_ABI, [
                 account,
             ]);
+            console.log("*****" + auctionList);
             auctionList = await Promise.all(
                 auctionList.map(async (auction, idx) => {
                     let gameAddress = auction[0];
@@ -86,7 +86,6 @@ const OnSale = ({
                 }),
             );
             auctionList = auctionList.filter(auction => {
-                
                 return auction.auction.status === "0";
             });
             setAuctionList(auctionList.reverse());
@@ -94,7 +93,7 @@ const OnSale = ({
         } catch (error) {
             toast.error(error);
             console.log(error);
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
